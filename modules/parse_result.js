@@ -19,16 +19,16 @@ module.exports = class ParseResult{
     addConversion(conversion){
         this.conversions.push(conversion);
         // We fill the correct map
-        let srcArray = this.mapSrc[conversion.deviceSrc];
+        let srcArray = this.mapSrc[conversion.deviseSrc];
         if (!srcArray){
             srcArray = [];
-            this.mapSrc[conversion.deviceSrc] = srcArray;
+            this.mapSrc[conversion.deviseSrc] = srcArray;
         }
         srcArray.push(conversion);
-        let destArray = this.mapDest[conversion.deviceDest];
+        let destArray = this.mapDest[conversion.deviseDest];
         if (!destArray){
             destArray = [];
-            this.mapDest[conversion.deviceDest] = destArray;
+            this.mapDest[conversion.deviseDest] = destArray;
         }
         destArray.push(conversion);
     }
