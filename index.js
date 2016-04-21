@@ -10,14 +10,17 @@ program
   .parse(process.argv);
   
 
+// We check the parameters
 if (!program.file){
     console.error("Argument file missing ! ");
     return;    
 }
 
 try {
+    // We check if the file exists
     fs.accessSync(program.file, fs.F_OK);
-    // Do something
+    
+    // We parse then we do the conversion
     parser.parse(program.file)
     .then((result)=>{
         engine.process(result); 
@@ -25,6 +28,8 @@ try {
     .catch((msg)=>{
         console.error('Parse Error ! %s', msg);
     });
+    
+    
 } catch (e) {
     console.error('File %s does not exists ! ', program.file);
     return;

@@ -10,7 +10,7 @@ let lineCount = 0,
     parseError = false,
     parseMessage = '';
 
-// Fonction de parsing
+// Parsing function
 function parse(filePath){
     return new Promise(function(resolve, reject){
         lineCount = 0;        

@@ -1,5 +1,8 @@
 'use strict'
 
+/*
+    Search all the paths
+ */
 function search(src, dest, result, exclusions){    
     
     // We only search through conversion with 'src' as source
@@ -38,6 +41,9 @@ function search(src, dest, result, exclusions){
     return mapResult.length > 0 ? mapResult : null;
 }
 
+/*
+    Transform the tree to list
+ */
 function shortest(results){
     let result = [];
     let queue = results.slice();
@@ -66,6 +72,10 @@ function shortest(results){
     return result;
 }
 
+
+/* 
+    Main function  
+*/
 function process(result){
     console.log('Will convert %s to %s for %d', result.deviseSrc, result.deviseDest, result.amount);
     let results = search(result.deviseSrc, result.deviseDest, result, []);
@@ -74,6 +84,8 @@ function process(result){
         let shortPath = shortest(results).sort(function(pathA, pathB){
             return pathA.length - pathB.length;
         })[0];
+        
+        // We calculate each conversion
         let finalAmount = result.amount;
         shortPath.forEach((data)=>{
             finalAmount = data.node.convert(finalAmount);
