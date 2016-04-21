@@ -1,7 +1,8 @@
 'use strict'
 
 module.exports = class Conversion{
-    constructor(deviseSrc, deviseDest, rate){
+    constructor(id, deviseSrc, deviseDest, rate){
+        this.id = id;
         this.deviseSrc = deviseSrc;
         this.deviseDest = deviseDest;
         this.rate = rate;    

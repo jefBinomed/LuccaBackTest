@@ -38,7 +38,7 @@ function parse(filePath){
                     if (parseError){
                         parseMessage = `Error at line %lineCount. Invalid line`;
                     }else{
-                        let convertionTemp =new Conversion(regExpResult[1],regExpResult[2],regExpResult[3]);
+                        let convertionTemp =new Conversion(lineCount-2,regExpResult[1],regExpResult[2],regExpResult[3]);
                         result.addConversion(convertionTemp); 
                     }
                 }
