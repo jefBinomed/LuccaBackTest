@@ -1,16 +1,18 @@
 'use strict'
 
 module.exports = class Conversion{
-    constructor(id, deviseSrc, deviseDest, rate){
-        this.id = id;
+    constructor(deviseSrc, deviseDest, rate, reveseRate){
         this.deviseSrc = deviseSrc;
         this.deviseDest = deviseDest;
-        this.rate = rate;    
+        this.rate = +rate;    
+        this.reveseRate = reveseRate;
     }
     
     
     
-    convert(currency){
-        return currency * rate;
+    convert(amount){
+        // We have to manage round conversion
+        let useRate = this.reveseRate ? (Math.round((1 / this.rate)*10000 ) / 10000) : this.rate;
+        return Math.round((+amount * useRate) * 10000) / 10000;
     }
 }

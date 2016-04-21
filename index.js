@@ -16,7 +16,6 @@ if (!program.file){
 }
 
 try {
-    console.log(program.file);
     fs.accessSync(program.file, fs.F_OK);
     // Do something
     parser.parse(program.file)
@@ -24,10 +23,9 @@ try {
         engine.process(result); 
     })
     .catch((msg)=>{
-        console.erro('Parse Error ! %s', msg);
+        console.error('Parse Error ! %s', msg);
     });
 } catch (e) {
     console.error('File %s does not exists ! ', program.file);
     return;
 }
-

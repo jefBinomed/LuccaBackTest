@@ -20,13 +20,13 @@ function parse(filePath){
             input: require('fs').createReadStream(filePath)
         });
 
-        lineReader.on('line', function (line) {
+        lineReader.on('line', (line)=>{
             if (lineCount === 0){
                 // Special Case for first line, we have to now what to convert
                 let regExpResult = line.match(regExpInit);
-                parseError = parseError || !regExpResult;
+                parseError = parseError || !regExpResult || +regExpResult[2]<0;
                 if (parseError){
-                    parseMessage = `Error at line %lineCount. Invalid line`;
+                    parseMessage = `Error at line ${lineCount}. Invalid line`;
                 }else{
                     result.initConversion(regExpResult[1],regExpResult[3],regExpResult[2]); 
                 }
@@ -34,11 +34,14 @@ function parse(filePath){
                 // General case
                 let regExpResult = line.match(regExpRate);
                 if (!parseError){
-                    parseError = parseError || !regExpResult;
+                    parseError = parseError || !regExpResult || +regExpResult[3]<0;
                     if (parseError){
-                        parseMessage = `Error at line %lineCount. Invalid line`;
+                        parseMessage = `Error at line ${lineCount}. Invalid line`;
                     }else{
-                        let convertionTemp =new Conversion(lineCount-2,regExpResult[1],regExpResult[2],regExpResult[3]);
+                        let convertionTemp =new Conversion(regExpResult[1],regExpResult[2],regExpResult[3]);
+                        result.addConversion(convertionTemp);
+                        // We do the inversion conversion
+                        convertionTemp =new Conversion(regExpResult[2],regExpResult[1],regExpResult[3],true);
                         result.addConversion(convertionTemp); 
                     }
                 }
@@ -47,7 +50,7 @@ function parse(filePath){
             lineCount++;           
         });
         
-        lineReader.on('close', function(){
+        lineReader.on('close', ()=>{
             if (parseError){
                 reject(parseMessage);
             }else{                
